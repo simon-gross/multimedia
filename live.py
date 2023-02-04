@@ -21,11 +21,11 @@ y = (-10018754.17, 10018754.17)
 
 out = r".\live"
 
-API_KEY = 'yrxBy1PoJAySrEumPGt1f9nqv'
-API_KEY_SECRET = 'nZEGpV6SP5K7xAAV0iBXFsvoIouYskZ6AodNdFbyK1jNBLFFAX'
+API_KEY = ''
+API_KEY_SECRET = ''
 
-access_token = "1237766974589014022-juXB27cf6ve53OMYlcvuB1e52VKoi6"
-access_token_secret = "IRzzpGa7r2dVVR425M5RQk3lwCb5JOKb5Hk9Wlx16ekkg"
+access_token = ""
+access_token_secret = ""
 
 
 def set_gdf(tweets):
