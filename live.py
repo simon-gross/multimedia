@@ -2,10 +2,10 @@ import os
 import numpy as np
 import pandas as pd
 import geopandas as gpd
-import live.local_get_tweets as gt
+import streaming
 import html
 import matplotlib.pyplot as plt
-import add_pixel_left as apl
+import remove_pixel
 from PIL import Image
 import tweepy as tw
 # import matplotlib.patheffects as pe
@@ -21,11 +21,11 @@ y = (-10018754.17, 10018754.17)
 
 out = r".\live"
 
-API_KEY = ''
-API_KEY_SECRET = ''
+API_KEY = 'F08q1o4skqkiR0nuR2YnILSob'
+API_KEY_SECRET = 'HHjitrVhnmQ3BViLsIVZpGKQfzJo45jAbBnVEaGq2Ra14Rmo8E'
 
-access_token = ""
-access_token_secret = ""
+access_token = "1237766974589014022-z5qD33nrfRmDV5FPdrquHtE1uouMqB"
+access_token_secret = "Rcv41dBaU1ipImj0nXjHjwvJNatnGdaD5Jhq9KOawcRUK"
 
 
 def set_gdf(tweets):
@@ -67,7 +67,6 @@ def plot_live_tweets(gdf, material_name):
     gdf.plot(ax=ax, marker="o", color="red", markersize=100, edgecolors='black')
     extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
     fig.savefig(os.path.join(out, f"{material_name}.png"), bbox_inches=extent)
-    return
     
     breite2 = 2048 * 1.2905
     länge2 = 1024 * 1.325
@@ -109,15 +108,15 @@ def plot_live_tweets(gdf, material_name):
     fig.savefig(os.path.join(out, f"{material_name}_material2.png"), bbox_inches=extent)
     
     
-    apl.update_pics(out)
+    remove_pixel.update_pics(out)
     
 def transform_to_dds(path, material_folder, material_name, c):
     img = Image.open(os.path.join(path, f"{material_name}.png"))
     img.compression = 'dtx1a'
-    img.save(fp=os.path.join(material_folder, f"{material_name}_{c}.dds"))
+    img.save(fp=os.path.join(material_folder, f"{material_name}.dds"))
     
 def get_api():
-    auth = gt.TweepyTwitterAuthenticator().authenticate_twitter_app()
+    auth = streaming.TweepyTwitterAuthenticator().authenticate_twitter_app()
     auth.set_access_token(access_token, access_token_secret)
     api = tw.API(auth)
     return api
@@ -148,7 +147,7 @@ def plot_outro_tweet(material_folder, material_name):
     fig.savefig(os.path.join(out, f"{material_name}.png"), bbox_inches=extent)
     fig.close()
     
-    apl.update_pics(out+"/outro")
+    remove_pixel.update_pics(out+"/outro")
     
     
     
@@ -159,12 +158,12 @@ def plot_outro_tweet(material_folder, material_name):
 
 if __name__ == '__main__':
 
-    material_folder = r"D:\ucloud\Multi\Projekt_2\finished_material_kapitel4\test"
+    material_folder = r"C:\Users\Simsi_Arbeit\Documents\OmniSuite_media\materials\textures\11\test_update\test"
     material_name = "current_tweets"
     all_tweets = []
     
     c = 10
-    twitter_streamer = gt.TweepyTwitterStreamer(time_limit=3)
+    twitter_streamer = streaming.TweepyTwitterStreamer(time_limit=3)
     while True:
         print("Getting Tweets")
         hash_tag_list = [""]
@@ -179,6 +178,6 @@ if __name__ == '__main__':
         transform_to_dds(out, material_folder, material_name+"_material2", c)
         transform_to_dds(out, material_folder, material_name, c)
         
-        c += 1
-        if c == 14:
-            break
+        # c += 1
+        # if c == 14:
+        #     break
